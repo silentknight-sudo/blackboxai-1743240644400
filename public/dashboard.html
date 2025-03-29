@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - diagnose.ai</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body class="font-[Inter] bg-gray-50">
+    <!-- Alert Container -->
+    <div id="alertContainer" class="fixed top-4 right-4 z-50 w-96"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Dashboard Layout -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="p-4">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-2xl font-bold text-gradient">diagnose.ai</h1>
+                    <button id="sidebarToggle" class="md:hidden text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <!-- User Profile Summary -->
+                <div class="mt-6 pb-4 border-b border-gray-200">
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="font-semibold text-gray-800" id="userName">Dr. Demo User</p>
+                            <p class="text-sm text-gray-500" id="userRole">Radiologist</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="mt-6">
+                    <div class="space-y-2">
+                        <a href="#dashboard" class="sidebar-link active">
+                            <i class="fas fa-home w-6"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="#upload" class="sidebar-link">
+                            <i class="fas fa-upload w-6"></i>
+                            <span>Upload Image</span>
+                        </a>
+                        <a href="#analysis" class="sidebar-link">
+                            <i class="fas fa-chart-line w-6"></i>
+                            <span>Analysis</span>
+                        </a>
+                        <a href="#models" class="sidebar-link">
+                            <i class="fas fa-cube w-6"></i>
+                            <span>3D Models</span>
+                        </a>
+                        <a href="#history" class="sidebar-link">
+                            <i class="fas fa-history w-6"></i>
+                            <span>History</span>
+                        </a>
+                        <a href="#settings" class="sidebar-link">
+                            <i class="fas fa-cog w-6"></i>
+                            <span>Settings</span>
+                        </a>
+                    </div>
+
+                    <!-- Logout Button -->
+                    <button onclick="diagnoseAI.auth.logout()" class="sidebar-link text-red-600 hover:bg-red-50 mt-4">
+                        <i class="fas fa-sign-out-alt w-6"></i>
+                        <span>Logout</span>
+                    </button>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="bg-white shadow-sm p-4 flex justify-between items-center mb-6">
+                <button id="mobileSidebarToggle" class="md:hidden text-gray-600">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-blue-600">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <button class="text-gray-600 hover:text-blue-600">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div class="px-4">
+                <!-- Welcome Section -->
+                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                    <h2 class="text-2xl font-bold mb-2">Welcome back, <span id="welcomeUserName">Dr. Demo User</span></h2>
+                    <p class="text-gray-600">Ready to analyze new medical images? Upload an image to get started.</p>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Total Analyses</p>
+                                <h3 class="text-2xl font-bold">1,234</h3>
+                            </div>
+                            <div class="text-blue-600 text-2xl">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Success Rate</p>
+                                <h3 class="text-2xl font-bold">99.8%</h3>
+                            </div>
+                            <div class="text-green-600 text-2xl">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">Processing Time</p>
+                                <h3 class="text-2xl font-bold">2.3s</h3>
+                            </div>
+                            <div class="text-yellow-600 text-2xl">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-gray-600">AI Confidence</p>
+                                <h3 class="text-2xl font-bold">96.5%</h3>
+                            </div>
+                            <div class="text-purple-600 text-2xl">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Section -->
+                <div class="bg-white rounded-xl shadow-md p-6 mb-6">
+                    <h3 class="text-xl font-semibold mb-4">Upload Medical Image</h3>
+                    <form id="uploadForm" class="space-y-4">
+                        <div id="dropZone" class="upload-zone">
+                            <div class="text-center">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-blue-600 mb-2"></i>
+                                <p class="text-lg font-medium">Drag and drop your image here</p>
+                                <p class="text-sm text-gray-500">or</p>
+                                <label class="btn-primary inline-block mt-2 cursor-pointer">
+                                    <span>Browse Files</span>
+                                    <input type="file" name="image" class="hidden" accept="image/*">
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Analysis Results -->
+                <div id="analysisResults" class="space-y-6">
+                    <!-- Results will be dynamically inserted here -->
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="bg-white rounded-xl shadow-md p-6">
+                    <h3 class="text-xl font-semibold mb-4">Recent Activity</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                            <div class="text-blue-600 text-xl mr-4">
+                                <i class="fas fa-file-medical"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">Chest X-ray Analysis</p>
+                                <p class="text-sm text-gray-500">2 minutes ago</p>
+                            </div>
+                            <div class="ml-auto">
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                                    Completed
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+                            <div class="text-blue-600 text-xl mr-4">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium">MRI Scan Analysis</p>
+                                <p class="text-sm text-gray-500">1 hour ago</p>
+                            </div>
+                            <div class="ml-auto">
+                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                                    Completed
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="/assets/js/main.js"></script>
+    <script>
+        // Mobile sidebar toggle
+        document.getElementById('mobileSidebarToggle').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('open');
+        });
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check authentication
+            if (!diagnoseAI.auth.checkAuth()) {
+                window.location.href = '/login';
+                return;
+            }
+
+            // Update user information
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userRole').textContent = user.role;
+                document.getElementById('welcomeUserName').textContent = user.name;
+            }
+
+            // Initialize file upload preview
+            const fileInput = document.querySelector('input[type="file"]');
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    diagnoseAI.analysis.uploadImage(file);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
