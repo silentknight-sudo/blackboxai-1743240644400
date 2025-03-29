@@ -114,58 +114,10 @@
                     <p class="text-gray-600">Ready to analyze new medical images? Upload an image to get started.</p>
                 </div>
 
-                <!-- Quick Stats -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-600">Total Analyses</p>
-                                <h3 class="text-2xl font-bold">1,234</h3>
-                            </div>
-                            <div class="text-blue-600 text-2xl">
-                                <i class="fas fa-chart-bar"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-600">Success Rate</p>
-                                <h3 class="text-2xl font-bold">99.8%</h3>
-                            </div>
-                            <div class="text-green-600 text-2xl">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-600">Processing Time</p>
-                                <h3 class="text-2xl font-bold">2.3s</h3>
-                            </div>
-                            <div class="text-yellow-600 text-2xl">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-600">AI Confidence</p>
-                                <h3 class="text-2xl font-bold">96.5%</h3>
-                            </div>
-                            <div class="text-purple-600 text-2xl">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Upload Section -->
                 <div class="bg-white rounded-xl shadow-md p-6 mb-6">
                     <h3 class="text-xl font-semibold mb-4">Upload Medical Image</h3>
-                    <form id="uploadForm" class="space-y-4">
+                    <form id="uploadForm" class="space-y-4" onsubmit="event.preventDefault();">
                         <div id="dropZone" class="upload-zone">
                             <div class="text-center">
                                 <i class="fas fa-cloud-upload-alt text-4xl text-blue-600 mb-2"></i>
@@ -173,7 +125,7 @@
                                 <p class="text-sm text-gray-500">or</p>
                                 <label class="btn-primary inline-block mt-2 cursor-pointer">
                                     <span>Browse Files</span>
-                                    <input type="file" name="image" class="hidden" accept="image/*">
+                                    <input type="file" name="image" class="hidden" accept="image/*" onchange="diagnoseAI.analysis.uploadImage(this.files[0])">
                                 </label>
                             </div>
                         </div>
@@ -184,78 +136,11 @@
                 <div id="analysisResults" class="space-y-6">
                     <!-- Results will be dynamically inserted here -->
                 </div>
-
-                <!-- Recent Activity -->
-                <div class="bg-white rounded-xl shadow-md p-6">
-                    <h3 class="text-xl font-semibold mb-4">Recent Activity</h3>
-                    <div class="space-y-4">
-                        <div class="flex items-center p-4 bg-gray-50 rounded-lg">
-                            <div class="text-blue-600 text-xl mr-4">
-                                <i class="fas fa-file-medical"></i>
-                            </div>
-                            <div>
-                                <p class="font-medium">Chest X-ray Analysis</p>
-                                <p class="text-sm text-gray-500">2 minutes ago</p>
-                            </div>
-                            <div class="ml-auto">
-                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
-                                    Completed
-                                </span>
-                            </div>
-                        </div>
-                        <div class="flex items-center p-4 bg-gray-50 rounded-lg">
-                            <div class="text-blue-600 text-xl mr-4">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <div>
-                                <p class="font-medium">MRI Scan Analysis</p>
-                                <p class="text-sm text-gray-500">1 hour ago</p>
-                            </div>
-                            <div class="ml-auto">
-                                <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
-                                    Completed
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </main>
     </div>
 
     <!-- Custom JavaScript -->
     <script src="/assets/js/main.js"></script>
-    <script>
-        // Mobile sidebar toggle
-        document.getElementById('mobileSidebarToggle').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('open');
-        });
-
-        // Initialize dashboard
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check authentication
-            if (!diagnoseAI.auth.checkAuth()) {
-                window.location.href = '/login';
-                return;
-            }
-
-            // Update user information
-            const user = JSON.parse(localStorage.getItem('user'));
-            if (user) {
-                document.getElementById('userName').textContent = user.name;
-                document.getElementById('userRole').textContent = user.role;
-                document.getElementById('welcomeUserName').textContent = user.name;
-            }
-
-            // Initialize file upload preview
-            const fileInput = document.querySelector('input[type="file"]');
-            fileInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    diagnoseAI.analysis.uploadImage(file);
-                }
-            });
-        });
-    </script>
 </body>
 </html>
