@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - diagnose.ai</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body class="font-[Inter] bg-gray-50">
+    <!-- Alert Container -->
+    <div id="alertContainer" class="fixed top-4 right-4 z-50 w-96"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full">
+            <!-- Logo and Title -->
+            <div class="text-center mb-8">
+                <a href="/" class="inline-block">
+                    <h2 class="text-4xl font-bold text-gradient mb-2">diagnose.ai</h2>
+                </a>
+                <h2 class="text-3xl font-bold text-gray-900">Welcome Back</h2>
+                <p class="mt-2 text-sm text-gray-600">
+                    Please sign in to your account
+                </p>
+            </div>
+
+            <!-- Login Form -->
+            <div class="bg-white rounded-xl shadow-xl p-8">
+                <form id="loginForm" class="space-y-6">
+                    <!-- Email Input -->
+                    <div>
+                        <label for="email" class="form-label">
+                            Email Address
+                        </label>
+                        <div class="mt-1 relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-gray-400"></i>
+                            </div>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                required
+                                class="form-input pl-10"
+                                placeholder="Enter your email"
+                                autocomplete="email"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div>
+                        <label for="password" class="form-label">
+                            Password
+                        </label>
+                        <div class="mt-1 relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                required
+                                class="form-input pl-10"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                            >
+                            <button 
+                                type="button"
+                                class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                                onclick="togglePassword()"
+                            >
+                                <i id="passwordToggle" class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me and Forgot Password -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input
+                                id="remember_me"
+                                name="remember_me"
+                                type="checkbox"
+                                class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            >
+                            <label for="remember_me" class="ml-2 block text-sm text-gray-900">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <div class="text-sm">
+                            <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                                Forgot your password?
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Login Button -->
+                    <div>
+                        <button type="submit" class="btn-primary w-full flex justify-center items-center">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Sign in
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Divider -->
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-gray-500">
+                                Or continue with
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Social Login Buttons -->
+                    <div class="mt-6 grid grid-cols-2 gap-3">
+                        <button type="button" class="btn-secondary flex justify-center items-center">
+                            <i class="fab fa-google mr-2"></i>
+                            Google
+                        </button>
+                        <button type="button" class="btn-secondary flex justify-center items-center">
+                            <i class="fab fa-microsoft mr-2"></i>
+                            Microsoft
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sign Up Link -->
+            <p class="mt-8 text-center text-sm text-gray-600">
+                Don't have an account?
+                <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
+                    Sign up now
+                </a>
+            </p>
+
+            <!-- Back to Home -->
+            <div class="mt-4 text-center">
+                <a href="/" class="text-sm text-gray-600 hover:text-blue-600 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="/assets/js/main.js"></script>
+    <script>
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.getElementById('passwordToggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordToggle.classList.remove('fa-eye');
+                passwordToggle.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                passwordToggle.classList.remove('fa-eye-slash');
+                passwordToggle.classList.add('fa-eye');
+            }
+        }
+
+        // Demo credentials helper
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add demo credentials hint
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            
+            emailInput.placeholder = 'demo@diagnose.ai';
+            passwordInput.placeholder = 'demo123';
+        });
+    </script>
+</body>
+</html>
