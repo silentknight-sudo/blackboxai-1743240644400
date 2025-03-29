@@ -41,7 +41,7 @@
 
             <!-- Login Form -->
             <div class="bg-white rounded-xl shadow-xl p-8">
-                <form id="loginForm" class="space-y-6">
+                <form id="loginForm" class="space-y-6" onsubmit="handleLogin(event)">
                     <!-- Email Input -->
                     <div>
                         <label for="email" class="form-label">
@@ -57,7 +57,7 @@
                                 type="email"
                                 required
                                 class="form-input pl-10"
-                                placeholder="Enter your email"
+                                placeholder="demo@diagnose.ai"
                                 autocomplete="email"
                             >
                         </div>
@@ -78,7 +78,7 @@
                                 type="password"
                                 required
                                 class="form-input pl-10"
-                                placeholder="Enter your password"
+                                placeholder="demo123"
                                 autocomplete="current-password"
                             >
                             <button 
@@ -185,15 +185,19 @@
             }
         }
 
-        // Demo credentials helper
-        document.addEventListener('DOMContentLoaded', () => {
-            // Add demo credentials hint
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
+        // Handle login form submission
+        async function handleLogin(event) {
+            event.preventDefault();
             
-            emailInput.placeholder = 'demo@diagnose.ai';
-            passwordInput.placeholder = 'demo123';
-        });
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                await diagnoseAI.auth.login(email, password);
+            } catch (error) {
+                console.error('Login error:', error);
+            }
+        }
     </script>
 </body>
 </html>
