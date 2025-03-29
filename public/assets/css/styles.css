@@ -1,0 +1,257 @@
+/* Custom CSS for diagnose.ai */
+
+:root {
+    --primary-color: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary-color: #64748b;
+    --accent-color: #06b6d4;
+    --success-color: #22c55e;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --background-light: #f8fafc;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+}
+
+/* General Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    background-color: var(--background-light);
+    line-height: 1.5;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 4px;
+}
+
+/* Custom Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Custom Components */
+
+/* Cards */
+.diagnostic-card {
+    @apply bg-white rounded-lg shadow-md p-6 transition-all duration-300;
+}
+
+.diagnostic-card:hover {
+    @apply shadow-lg transform translate-y-[-2px];
+}
+
+/* Buttons */
+.btn-primary {
+    @apply bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 
+           transition-colors duration-300 focus:outline-none focus:ring-2 
+           focus:ring-blue-500 focus:ring-offset-2;
+}
+
+.btn-secondary {
+    @apply bg-gray-500 text-white px-6 py-2 rounded-md hover:bg-gray-600 
+           transition-colors duration-300 focus:outline-none focus:ring-2 
+           focus:ring-gray-400 focus:ring-offset-2;
+}
+
+/* Forms */
+.form-input {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none 
+           focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+}
+
+.form-label {
+    @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+/* Dashboard Layout */
+.dashboard-container {
+    @apply flex min-h-screen bg-gray-50;
+}
+
+.sidebar {
+    @apply fixed left-0 top-0 h-full w-64 bg-white shadow-lg z-30
+           transform transition-transform duration-300 ease-in-out;
+}
+
+.sidebar-link {
+    @apply flex items-center px-6 py-3 text-gray-600 hover:bg-blue-50 
+           hover:text-blue-600 transition-colors duration-200;
+}
+
+.sidebar-link.active {
+    @apply bg-blue-50 text-blue-600 border-r-4 border-blue-600;
+}
+
+.main-content {
+    @apply flex-1 ml-64 p-8;
+}
+
+/* Analysis Results */
+.analysis-section {
+    @apply bg-white rounded-lg shadow-md p-6 mb-6;
+}
+
+.analysis-header {
+    @apply text-xl font-semibold mb-4 text-gray-800;
+}
+
+.metric-card {
+    @apply bg-white rounded-lg shadow p-4 transition-all duration-300;
+}
+
+.metric-value {
+    @apply text-2xl font-bold text-blue-600;
+}
+
+.metric-label {
+    @apply text-sm text-gray-500;
+}
+
+/* Loading States */
+.loading-overlay {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center 
+           justify-center z-50;
+}
+
+.loading-spinner {
+    @apply animate-spin rounded-full h-12 w-12 border-4 border-blue-500 
+           border-t-transparent;
+}
+
+/* Alert Messages */
+.alert {
+    @apply p-4 rounded-md mb-4;
+}
+
+.alert-success {
+    @apply bg-green-100 text-green-700 border border-green-200;
+}
+
+.alert-error {
+    @apply bg-red-100 text-red-700 border border-red-200;
+}
+
+.alert-warning {
+    @apply bg-yellow-100 text-yellow-700 border border-yellow-200;
+}
+
+/* Image Upload Zone */
+.upload-zone {
+    @apply border-2 border-dashed border-gray-300 rounded-lg p-8 
+           text-center cursor-pointer hover:border-blue-500 
+           transition-colors duration-300;
+}
+
+.upload-zone.dragging {
+    @apply border-blue-500 bg-blue-50;
+}
+
+/* 3D Model Viewer */
+.model-viewer {
+    @apply bg-gray-900 rounded-lg overflow-hidden relative;
+    aspect-ratio: 16/9;
+}
+
+.model-controls {
+    @apply absolute bottom-4 right-4 flex gap-2;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        @apply transform -translate-x-full;
+    }
+    
+    .sidebar.open {
+        @apply transform translate-x-0;
+    }
+    
+    .main-content {
+        @apply ml-0;
+    }
+}
+
+/* Hero Section */
+.hero-section {
+    @apply relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-800 
+           text-white py-24;
+}
+
+.hero-content {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10;
+}
+
+.hero-pattern {
+    @apply absolute inset-0 opacity-10;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Features Section */
+.feature-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-12;
+}
+
+.feature-card {
+    @apply bg-white rounded-xl shadow-md p-6 transition-all duration-300 
+           hover:shadow-lg hover:transform hover:-translate-y-1;
+}
+
+/* Statistics Section */
+.stats-container {
+    @apply grid grid-cols-2 md:grid-cols-4 gap-4 my-8;
+}
+
+.stat-card {
+    @apply bg-white rounded-lg shadow p-4 text-center;
+}
+
+.stat-value {
+    @apply text-3xl font-bold text-blue-600;
+}
+
+.stat-label {
+    @apply text-sm text-gray-500 mt-1;
+}
+
+/* Custom Utilities */
+.text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500;
+}
+
+.glass-effect {
+    @apply backdrop-blur-md bg-white bg-opacity-80;
+}
+
+/* Print Styles */
+@media print {
+    .no-print {
+        display: none;
+    }
+    
+    .print-only {
+        display: block;
+    }
+    
+    body {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+}
